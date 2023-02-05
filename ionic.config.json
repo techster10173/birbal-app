@@ -1,0 +1,7 @@
+{
+  "name": "Birbal",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
