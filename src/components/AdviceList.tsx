@@ -20,13 +20,12 @@ const AdviceList = (props: any) => {
 
   const populateAdvices = async () => {
     presentLoading();
-    try{
+    try {
       const { data } = await props.getAdvice(offset);
       setAdvices(offset === 0 ? data : [...advices, ...data]);
     } catch (e) {
       console.error(e);
       presentToast('Something went wrong', 2000);
-
     }
     dismissLoading();
   };
@@ -42,11 +41,14 @@ const AdviceList = (props: any) => {
 
   return (
     <>
-      <IonRefresher slot="fixed" onIonRefresh={async (ev) => {
-        setOffset(0)
-        await populateAdvices();
-        (ev.target as HTMLIonRefresherElement).complete();
-      }}>
+      <IonRefresher
+        slot="fixed"
+        onIonRefresh={async (ev) => {
+          setOffset(0);
+          await populateAdvices();
+          (ev.target as HTMLIonRefresherElement).complete();
+        }}
+      >
         <IonRefresherContent></IonRefresherContent>
       </IonRefresher>
       {advices.map((advice: any) => (
@@ -57,11 +59,13 @@ const AdviceList = (props: any) => {
           </IonButton>
         </IonCard>
       ))}
-      <IonInfiniteScroll onIonInfinite={async (ev) => {
-        setOffset(offset + 1)
-        await populateAdvices();
-        (ev.target as HTMLIonInfiniteScrollElement).complete();
-      }}>
+      <IonInfiniteScroll
+        onIonInfinite={async (ev) => {
+          setOffset(offset + 1);
+          await populateAdvices();
+          (ev.target as HTMLIonInfiniteScrollElement).complete();
+        }}
+      >
         <IonInfiniteScrollContent />
       </IonInfiniteScroll>
     </>

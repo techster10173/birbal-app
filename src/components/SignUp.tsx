@@ -1,6 +1,15 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { Preferences } from '@capacitor/preferences';
-import { IonList, IonItem, IonLabel, IonInput, IonButton, useIonToast, useIonRouter, useIonLoading } from '@ionic/react';
+import {
+  IonList,
+  IonItem,
+  IonLabel,
+  IonInput,
+  IonButton,
+  useIonToast,
+  useIonRouter,
+  useIonLoading,
+} from '@ionic/react';
 import { useState } from 'react';
 import { signUp } from '../services/UserService';
 
@@ -23,7 +32,7 @@ const SignUp = (props: any) => {
     try {
       present({ message: 'Creating account...' });
       const { data } = await signUp(newEmail, newPass);
-      await Preferences.set({ key: 'token', value: data.token })
+      await Preferences.set({ key: 'token', value: data.token });
       router.push('/tutorial', 'root');
     } catch (error: any) {
       console.error(error);

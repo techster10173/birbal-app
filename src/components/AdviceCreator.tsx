@@ -28,9 +28,7 @@ const AdvisorCreator = ({ onDismiss }: { onDismiss: (data?: string | null, role?
               Cancel
             </IonButton>
           </IonButtons>
-          <IonTitle>
-            Create Advice
-          </IonTitle>
+          <IonTitle>Create Advice</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent scrollY={false} className="ion-padding">

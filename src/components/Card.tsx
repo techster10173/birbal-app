@@ -54,7 +54,6 @@ const CardInner = (props: any, ref: any) => {
               });
             }
           });
-
         } else if (ev.deltaY > window.innerHeight / 4) {
           hostElement.style.transform = `translateY(${window.innerHeight * 1.5}px)`;
           props.emit('SAVE');
@@ -114,13 +113,12 @@ const CardInner = (props: any, ref: any) => {
           mode="ios"
           className="select-button"
           onClick={(e: any) => {
-            if(props.adviceId) {
+            if (props.adviceId) {
               presentPopover({
                 event: e,
-              })
+              });
             }
-          }
-          }
+          }}
         >
           <IonIcon slot="icon-only" icon={ellipsisVertical} />
         </IonButton>

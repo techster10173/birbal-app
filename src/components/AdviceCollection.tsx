@@ -22,13 +22,9 @@ const AdviceCollection = ({ onDismiss }: { onDismiss: () => void }) => {
       <IonHeader>
         <IonToolbar color="primary">
           <IonButtons slot="start">
-            <IonButton onClick={() => onDismiss()}>
-              Cancel
-            </IonButton>
+            <IonButton onClick={() => onDismiss()}>Cancel</IonButton>
           </IonButtons>
-          <IonTitle>
-            My Advices
-          </IonTitle>
+          <IonTitle>My Advices</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>

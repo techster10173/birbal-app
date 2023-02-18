@@ -1,5 +1,14 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { IonList, IonItem, IonLabel, IonInput, IonButton, useIonToast, useIonRouter, useIonLoading } from '@ionic/react';
+import {
+  IonList,
+  IonItem,
+  IonLabel,
+  IonInput,
+  IonButton,
+  useIonToast,
+  useIonRouter,
+  useIonLoading,
+} from '@ionic/react';
 import { useState } from 'react';
 import { Preferences } from '@capacitor/preferences';
 import { signIn } from '../services/UserService';
@@ -40,27 +49,26 @@ const SignIn = (props: any) => {
     try {
       present({ message: 'Logging in...' });
       const { data } = await signIn(email, password);
-      await Preferences.set({ key: 'token', value: data.token })
+      await Preferences.set({ key: 'token', value: data.token });
       router.push('/home', 'root');
     } catch (error: any) {
-      let message = ""
-      switch(error.response.status){
+      let message = '';
+      switch (error.response.status) {
         case 400:
-          message = "Invalid email or password"
+          message = 'Invalid email or password';
           break;
         case 500:
-          message = "Server error"
+          message = 'Server error';
           break;
         default:
-          message = "Unknown error"
-      } 
+          message = 'Unknown error';
+      }
       presentToast({
         message: message,
         duration: 2000,
         position: 'bottom',
       });
-    }
-    finally {
+    } finally {
       dismiss();
     }
   };

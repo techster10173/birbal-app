@@ -1,4 +1,14 @@
-import { IonCard, IonCardContent, IonContent, IonFooter, IonHeader, IonImg, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import {
+  IonCard,
+  IonCardContent,
+  IonContent,
+  IonFooter,
+  IonHeader,
+  IonImg,
+  IonPage,
+  IonTitle,
+  IonToolbar,
+} from '@ionic/react';
 import { useState } from 'react';
 
 import SignIn from '../components/SignIn';
@@ -25,11 +35,13 @@ const Login: React.FC = () => {
       </IonContent>
       <IonFooter className="ion-no-border">
         <IonToolbar>
-          <IonTitle style={{
-            fontSize: '0.6rem',
-            backgroundColor: 'var(--ion-color-primary)',
-            color: 'var(--ion-color-dark-tint)',
-          }}>
+          <IonTitle
+            style={{
+              fontSize: '0.6rem',
+              backgroundColor: 'var(--ion-color-primary)',
+              color: 'var(--ion-color-dark-tint)',
+            }}
+          >
             Created by Sreesaketh Grandhe
             <br />
             Copyright 2023-2024

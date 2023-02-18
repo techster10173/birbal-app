@@ -13,10 +13,8 @@ export const signIn = async (email: string, password: string) => {
     email,
     password,
   });
-}
+};
 
 export const signOut = async () => {
-  return Preferences.remove({key: 'token'})
-}
-
-
+  return Preferences.remove({ key: 'token' });
+};

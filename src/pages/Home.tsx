@@ -11,8 +11,6 @@ import {
   useIonToast,
   useIonModal,
   createAnimation,
-  IonLabel,
-  IonSkeletonText,
   IonImg,
   useIonLoading,
 } from '@ionic/react';
@@ -39,7 +37,7 @@ const Home: React.FC = () => {
 
   const [overlayIcon, setOverlayIcon] = useState({
     color: '#2dd36f',
-    icon: thumbsUp
+    icon: thumbsUp,
   });
 
   useEffect(() => {
@@ -47,33 +45,35 @@ const Home: React.FC = () => {
       message: 'Loading...',
       duration: 1000 * 60 * 5,
     });
-    Preferences.get({key: 'token'}).then((res) => {
-      if(res.value) {
-        getNewAdvice()
-          .then((newAdvice) => setAdvice(newAdvice.data))
-          .catch(error => {
-            console.error(error);
-            presentToast({
-              color: 'danger',
-              message: 'Whoops! Something went wrong.',
-              duration: 5000,
-              position: 'bottom',
-            });
-          })
-          .finally(dismissLoading);
-      } else {
-        dismissLoading();
-        router.push('/login', 'root');
-      }
-    }).catch(error => {
-      console.error(error);
-      presentToast({
-        color: 'danger',
-        message: 'Whoops! Something went wrong.',
-        duration: 5000,
-        position: 'bottom',
+    Preferences.get({ key: 'token' })
+      .then((res) => {
+        if (res.value) {
+          getNewAdvice()
+            .then((newAdvice) => setAdvice(newAdvice.data))
+            .catch((error) => {
+              console.error(error);
+              presentToast({
+                color: 'danger',
+                message: 'Whoops! Something went wrong.',
+                duration: 5000,
+                position: 'bottom',
+              });
+            })
+            .finally(dismissLoading);
+        } else {
+          dismissLoading();
+          router.push('/login', 'root');
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        presentToast({
+          color: 'danger',
+          message: 'Whoops! Something went wrong.',
+          duration: 5000,
+          position: 'bottom',
+        });
       });
-    });
   }, []);
 
   const addAdvice = async () => {
@@ -154,7 +154,7 @@ const Home: React.FC = () => {
       ])
       .easing('ease-in-out');
     await animation.play();
-  }
+  };
 
   const handleActions = async (action: string) => {
     if (!advice) return;
@@ -162,24 +162,24 @@ const Home: React.FC = () => {
       case 'LIKE':
         setOverlayIcon({
           color: 'var(--ion-color-success)',
-          icon: thumbsUp
-        })
+          icon: thumbsUp,
+        });
         handleOverlayAnimation();
         await likeAdvice(advice._id);
         break;
       case 'DISLIKE':
         setOverlayIcon({
           icon: thumbsDown,
-          color: 'var(--ion-color-danger)'
-        })
+          color: 'var(--ion-color-danger)',
+        });
         handleOverlayAnimation();
         await dislikeAdvice(advice._id);
         break;
       case 'SAVE':
         setOverlayIcon({
           icon: bookmark,
-          color: 'var(--ion-color-warning)'
-        })
+          color: 'var(--ion-color-warning)',
+        });
         handleOverlayAnimation();
         await saveAdvice(advice._id);
         await likeAdvice(advice._id);
@@ -201,45 +201,52 @@ const Home: React.FC = () => {
 
   return (
     <>
-    <IonPage>
-      <div id="box" ref={overlayRef} style={{
-        backgroundColor: overlayIcon.color,
-      }}>
-        <IonIcon slot="icon-only" size="large" color="light" icon={overlayIcon.icon} />
-      </div>
-      <IonHeader>
-        <IonToolbar color="primary">
-          <IonButtons slot='start'>
-            <IonButton slot="start" onClick={signOutWrapper}>
-              <IonIcon slot="icon-only" icon={logOut} />
-            </IonButton>
-          </IonButtons>
-          <IonTitle><IonImg className="title-img" src="./assets/birbal-word-white.svg" /></IonTitle>
-          <IonButtons slot="end">
-            <IonButton onClick={() => presentAdviceCollection()}>
-              <IonIcon slot="icon-only" icon={book} />
-            </IonButton>
-          </IonButtons>
-        </IonToolbar>
-      </IonHeader>
-      <IonContent scrollY={false} fullscreen>
-        <div className="card-container">
-          <LoadingCard />
-          {advice ? 
-            <Card key={advice._id} ref={animationRef} adviceId={advice._id} emit={handleActions}>
-              {advice.advice}
-            </Card> : 
-            <LoadingCard />
-          }
-        </div>
-        <ManualActions
-          likeStatus={async (action) => {
-            await handlePlayAnimation(action === 'LIKE');
-            handleActions(action);
+      <IonPage>
+        <div
+          id="box"
+          ref={overlayRef}
+          style={{
+            backgroundColor: overlayIcon.color,
           }}
-        />
-      </IonContent>
-    </IonPage>
+        >
+          <IonIcon slot="icon-only" size="large" color="light" icon={overlayIcon.icon} />
+        </div>
+        <IonHeader>
+          <IonToolbar color="primary">
+            <IonButtons slot="start">
+              <IonButton slot="start" onClick={signOutWrapper}>
+                <IonIcon slot="icon-only" icon={logOut} />
+              </IonButton>
+            </IonButtons>
+            <IonTitle>
+              <IonImg className="title-img" src="./assets/birbal-word-white.svg" />
+            </IonTitle>
+            <IonButtons slot="end">
+              <IonButton onClick={() => presentAdviceCollection()}>
+                <IonIcon slot="icon-only" icon={book} />
+              </IonButton>
+            </IonButtons>
+          </IonToolbar>
+        </IonHeader>
+        <IonContent scrollY={false} fullscreen>
+          <div className="card-container">
+            <LoadingCard />
+            {advice ? (
+              <Card key={advice._id} ref={animationRef} adviceId={advice._id} emit={handleActions}>
+                {advice.advice}
+              </Card>
+            ) : (
+              <LoadingCard />
+            )}
+          </div>
+          <ManualActions
+            likeStatus={async (action) => {
+              await handlePlayAnimation(action === 'LIKE');
+              handleActions(action);
+            }}
+          />
+        </IonContent>
+      </IonPage>
     </>
   );
 };
