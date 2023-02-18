@@ -1,0 +1,32 @@
+.swipe-card {
+  position: absolute;
+  right: 0;
+  left: 0;
+  height: 75vh;
+  top: 1vh;
+  background: var(--ion-color-primary-shade);
+  color: var(--ion-color-primary-contrast);
+  transition: 0.3s ease-in;
+}
+
+.swipe-card:first-child {
+  filter: blur(5px);
+}
+
+.select-button {
+  position: sticky;
+  left: 100%;
+  --background: var(--ion-color-primary-shade);
+}
+
+.card-header {
+  padding-top: 2%;
+  padding-right: 0%;
+}
+
+.report-button {
+  --background: var(--ion-color-danger-contrast);
+  --background-activated: var(--ion-color-danger);
+  --color: var(--ion-color-danger);
+  --color-activated: var(--ion-color-danger-contrast);
+}

@@ -1,31 +1,41 @@
 {
-  "name": "Birbal",
+  "name": "birbal",
   "version": "0.0.1",
   "private": true,
   "dependencies": {
+    "@capacitor/android": "4.6.3",
     "@capacitor/app": "4.1.1",
+    "@capacitor/assets": "^2.0.4",
     "@capacitor/core": "4.6.3",
     "@capacitor/haptics": "4.1.0",
+    "@capacitor/ios": "4.6.3",
     "@capacitor/keyboard": "4.1.1",
+    "@capacitor/preferences": "^4.0.2",
+    "@capacitor/share": "^4.1.1",
+    "@capacitor/splash-screen": "^4.1.4",
     "@capacitor/status-bar": "4.1.1",
-    "@ionic/react": "^6.0.0",
-    "@ionic/react-router": "^6.0.0",
+    "@ionic/react": "6.5.3",
+    "@ionic/react-router": "6.5.3",
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^12.6.3",
     "@types/jest": "^26.0.20",
     "@types/node": "^12.19.15",
-    "@types/react": "^18.0.17",
+    "@types/react": "18.0.28",
     "@types/react-dom": "^18.0.6",
     "@types/react-router": "^5.1.11",
     "@types/react-router-dom": "^5.1.7",
+    "@types/uuid": "^9.0.0",
+    "axios": "^1.3.2",
     "history": "^4.9.0",
-    "ionicons": "^6.0.3",
+    "ionicons": "6.1.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "^5.0.0",
+    "sharp": "^0.31.3",
+    "swiper": "^9.0.5",
     "typescript": "^4.1.3",
     "web-vitals": "^0.2.4",
     "workbox-background-sync": "^5.1.4",
@@ -45,7 +55,12 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --transformIgnorePatterns 'node_modules/(?!(@ionic/react|@ionic/react-router|@ionic/core|@stencil/core|ionicons)/)'",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "npm run eslint && npm run prettier -- --check",
+    "fmt": "npm run eslint -- --fix && npm run prettier -- --write",
+    "prettier": "prettier src/**/*.{ts,tsx}",
+    "eslint": "eslint 'src/**/*.{ts,tsx}' --no-error-on-unmatched-pattern",
+    "assets": "capacitor-assets generate --assetPath public/assets --splashBackgroundColor '#ca601d' --splashBackgroundColorDark '#ca601d' --logoSplashScale 1"
   },
   "eslintConfig": {
     "extends": [
@@ -53,6 +68,7 @@
       "react-app/jest"
     ]
   },
+  "prettier": "@ionic/prettier-config",
   "browserslist": {
     "production": [
       "Chrome >=60",
@@ -69,7 +85,12 @@
     ]
   },
   "devDependencies": {
-    "@capacitor/cli": "4.6.3"
+    "@capacitor/cli": "4.6.3",
+    "@ionic/eslint-config": "^0.3.0",
+    "@ionic/prettier-config": "^2.0.0",
+    "@typescript-eslint/eslint-plugin": "5.51.0",
+    "@typescript-eslint/parser": "5.51.0",
+    "eslint": "8.34.0"
   },
   "description": "An Ionic project"
 }

@@ -1,0 +1,15 @@
+p {
+  font-size: 10px;
+  text-align: center;
+}
+
+.submitButton {
+  margin: 5%;
+  display: block;
+}
+
+.primary-img {
+  padding: 25%;
+  padding-bottom: 0;
+  margin-bottom: 20%;
+}
