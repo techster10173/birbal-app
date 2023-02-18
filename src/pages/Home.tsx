@@ -161,7 +161,7 @@ const Home: React.FC = () => {
     switch (action) {
       case 'LIKE':
         setOverlayIcon({
-          color: '#2dd36f',
+          color: 'var(--ion-color-success)',
           icon: thumbsUp
         })
         handleOverlayAnimation();
@@ -170,7 +170,7 @@ const Home: React.FC = () => {
       case 'DISLIKE':
         setOverlayIcon({
           icon: thumbsDown,
-          color: '#eb445a'
+          color: 'var(--ion-color-danger)'
         })
         handleOverlayAnimation();
         await dislikeAdvice(advice._id);
@@ -178,7 +178,7 @@ const Home: React.FC = () => {
       case 'SAVE':
         setOverlayIcon({
           icon: bookmark,
-          color: '#ffc409'
+          color: 'var(--ion-color-warning)'
         })
         handleOverlayAnimation();
         await saveAdvice(advice._id);
