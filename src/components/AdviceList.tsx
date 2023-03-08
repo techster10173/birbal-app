@@ -14,29 +14,32 @@ import { useEffect, useState } from 'react';
 const AdviceList = (props: any) => {
   const [offset, setOffset] = useState(0);
   const [advices, setAdvices] = useState<any[]>([]);
+  const [disableInfiniteScroll, setDisableInfiniteScroll] = useState(false);
 
   const [presentLoading, dismissLoading] = useIonLoading();
   const [presentToast] = useIonToast();
 
-  const populateAdvices = async () => {
-    presentLoading();
+  const populateAdvices = async (newOffset: number) => {
     try {
-      const { data } = await props.getAdvice(offset);
-      setAdvices(offset === 0 ? data : [...advices, ...data]);
+      const { data } = await props.getAdvice(newOffset);
+      setAdvices(newOffset === 0 ? data : [...advices, ...data]);
+      setOffset(newOffset);
+      setDisableInfiniteScroll(data.length === 0);
     } catch (e) {
       console.error(e);
       presentToast('Something went wrong', 2000);
     }
-    dismissLoading();
-  };
+  }
 
   useEffect(() => {
-    populateAdvices();
+    presentLoading();
+    populateAdvices(0).then(dismissLoading);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const removeWrapper = async (id: string) => {
     await props.removeAdvice(id);
-    await populateAdvices();
+    await populateAdvices(0);
   };
 
   return (
@@ -44,9 +47,8 @@ const AdviceList = (props: any) => {
       <IonRefresher
         slot="fixed"
         onIonRefresh={async (ev) => {
-          setOffset(0);
-          await populateAdvices();
-          (ev.target as HTMLIonRefresherElement).complete();
+          await populateAdvices(0);
+          await (ev.target as HTMLIonRefresherElement).complete();
         }}
       >
         <IonRefresherContent></IonRefresherContent>
@@ -60,10 +62,10 @@ const AdviceList = (props: any) => {
         </IonCard>
       ))}
       <IonInfiniteScroll
+        disabled={disableInfiniteScroll}
         onIonInfinite={async (ev) => {
-          setOffset(offset + 1);
-          await populateAdvices();
-          (ev.target as HTMLIonInfiniteScrollElement).complete();
+          await populateAdvices(offset + 1);
+          await (ev.target as HTMLIonInfiniteScrollElement).complete();
         }}
       >
         <IonInfiniteScrollContent />

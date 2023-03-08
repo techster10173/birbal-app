@@ -12,7 +12,7 @@ const Tutorial: React.FC = () => {
 
   return (
     <IonPage>
-      <IonContent fullscreen>
+      <IonContent fullscreen scrollY={false}>
         <Swiper className="swiper-container" modules={[Autoplay]} autoplay={true}>
           <SwiperSlide>
             <div className="tutorial-icon thumbs-up">

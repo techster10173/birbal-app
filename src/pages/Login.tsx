@@ -33,8 +33,8 @@ const Login: React.FC = () => {
           </IonCardContent>
         </IonCard>
       </IonContent>
-      <IonFooter className="ion-no-border">
-        <IonToolbar>
+      <IonFooter translucent={true}>
+        <IonToolbar className="footer-toolbar">
           <IonTitle
             style={{
               fontSize: '0.6rem',

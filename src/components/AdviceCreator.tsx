@@ -24,14 +24,14 @@ const AdvisorCreator = ({ onDismiss }: { onDismiss: (data?: string | null, role?
       <IonHeader>
         <IonToolbar color="primary">
           <IonButtons slot="start">
-            <IonButton color="medium" onClick={() => onDismiss(null, 'cancel')}>
+            <IonButton onClick={() => onDismiss(null, 'cancel')}>
               Cancel
             </IonButton>
           </IonButtons>
           <IonTitle>Create Advice</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent scrollY={false} className="ion-padding">
+      <IonContent scrollY={true} className="ion-padding">
         <IonCard>
           <IonCardContent>
             <IonTextarea

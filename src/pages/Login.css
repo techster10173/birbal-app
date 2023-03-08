@@ -13,3 +13,9 @@ p {
   padding-bottom: 0;
   margin-bottom: 20%;
 }
+
+.footer-toolbar {
+  padding-bottom: 0% !important;
+  --background: #ca601d;
+  text-align: center;
+}

@@ -12,7 +12,6 @@ import {
   useIonModal,
   createAnimation,
   IonImg,
-  useIonLoading,
 } from '@ionic/react';
 import { book, bookmark, logOut, thumbsDown, thumbsUp } from 'ionicons/icons';
 import { useEffect, useRef, useState } from 'react';
@@ -28,7 +27,6 @@ import LoadingCard from '../components/LoadingCard';
 const Home: React.FC = () => {
   const router = useIonRouter();
   const [presentToast] = useIonToast();
-  const [presentLoading, dismissLoading] = useIonLoading();
 
   const [advice, setAdvice] = useState<null | {
     _id: string;
@@ -41,10 +39,6 @@ const Home: React.FC = () => {
   });
 
   useEffect(() => {
-    presentLoading({
-      message: 'Loading...',
-      duration: 1000 * 60 * 5,
-    });
     Preferences.get({ key: 'token' })
       .then((res) => {
         if (res.value) {
@@ -59,9 +53,7 @@ const Home: React.FC = () => {
                 position: 'bottom',
               });
             })
-            .finally(dismissLoading);
         } else {
-          dismissLoading();
           router.push('/login', 'root');
         }
       })
@@ -73,8 +65,8 @@ const Home: React.FC = () => {
           duration: 5000,
           position: 'bottom',
         });
-      });
-  }, []);
+      })
+  }, [presentToast, router]);
 
   const addAdvice = async () => {
     try {
