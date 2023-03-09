@@ -18,3 +18,7 @@ export const signIn = (email: string, password: string) => {
 export const signOut = () => {
   return Preferences.remove({ key: 'token' });
 };
+
+export const deleteAccount = () => {
+  return api.delete('/user');
+}

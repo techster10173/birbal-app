@@ -12,17 +12,18 @@ import {
   useIonModal,
   createAnimation,
   IonImg,
+  IonMenuButton,
 } from '@ionic/react';
-import { book, bookmark, logOut, thumbsDown, thumbsUp } from 'ionicons/icons';
+import { book, bookmark, thumbsDown, thumbsUp } from 'ionicons/icons';
 import { useEffect, useRef, useState } from 'react';
 import AdviceCollection from '../components/AdviceCollection';
 import Card from '../components/Card';
 import ManualActions from '../components/ManualActions';
 import './Home.css';
 import { getNewAdvice, likeAdvice, dislikeAdvice, saveAdvice, reportAdvice } from '../services/AdviceService';
-import { signOut } from '../services/UserService';
 import { Preferences } from '@capacitor/preferences';
 import LoadingCard from '../components/LoadingCard';
+import SideMenu from '../components/SideMenu';
 
 const Home: React.FC = () => {
   const router = useIonRouter();
@@ -74,20 +75,6 @@ const Home: React.FC = () => {
       setAdvice(data);
     } catch (error: any) {
       console.error(error);
-    }
-  };
-
-  const signOutWrapper = async () => {
-    try {
-      await signOut();
-      router.push('/login', 'root');
-    } catch (error: any) {
-      console.error(error);
-      presentToast({
-        message: error.message,
-        duration: 2000,
-        position: 'bottom',
-      });
     }
   };
 
@@ -193,7 +180,8 @@ const Home: React.FC = () => {
 
   return (
     <>
-      <IonPage>
+      <SideMenu />
+      <IonPage id="main-content">
         <div
           id="box"
           ref={overlayRef}
@@ -206,8 +194,8 @@ const Home: React.FC = () => {
         <IonHeader>
           <IonToolbar color="primary">
             <IonButtons slot="start">
-              <IonButton slot="start" onClick={signOutWrapper}>
-                <IonIcon slot="icon-only" icon={logOut} />
+              <IonButton slot="start">
+                <IonMenuButton />
               </IonButton>
             </IonButtons>
             <IonTitle>
