@@ -1,24 +1,34 @@
-import { Preferences } from '@capacitor/preferences';
+import {
+  signOut as signOutFirebase,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  sendPasswordResetEmail as resetEmail,
+  deleteUser,
+} from 'firebase/auth';
 import api from './axios';
+import getAuth from './firebase';
 
-export const signUp = (email: string, password: string) => {
+export const signUp = async (email: string, password: string) => {
+  await createUserWithEmailAndPassword(getAuth(), email, password);
   return api.put('/user/auth', {
     email,
-    password,
   });
+};
+
+export const sendPasswordResetEmail = (email: string) => {
+  return resetEmail(getAuth(), email);
 };
 
 export const signIn = (email: string, password: string) => {
-  return api.post('/user/auth', {
-    email,
-    password,
-  });
+  return signInWithEmailAndPassword(getAuth(), email, password);
 };
 
 export const signOut = () => {
-  return Preferences.remove({ key: 'token' });
+  return signOutFirebase(getAuth());
 };
 
-export const deleteAccount = () => {
-  return api.delete('/user');
-}
+export const deleteAccount = async () => {
+  await api.delete('/user');
+  const auth = getAuth();
+  return deleteUser(auth.currentUser!);
+};

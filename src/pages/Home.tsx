@@ -15,15 +15,16 @@ import {
   IonMenuButton,
 } from '@ionic/react';
 import { book, bookmark, thumbsDown, thumbsUp } from 'ionicons/icons';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import AdviceCollection from '../components/AdviceCollection';
 import Card from '../components/Card';
 import ManualActions from '../components/ManualActions';
 import './Home.css';
 import { getNewAdvice, likeAdvice, dislikeAdvice, saveAdvice, reportAdvice } from '../services/AdviceService';
-import { Preferences } from '@capacitor/preferences';
 import LoadingCard from '../components/LoadingCard';
 import SideMenu from '../components/SideMenu';
+import { onAuthStateChanged } from 'firebase/auth';
+import getFirebaseAuth from '../services/firebase';
 
 const Home: React.FC = () => {
   const router = useIonRouter();
@@ -39,44 +40,30 @@ const Home: React.FC = () => {
     icon: thumbsUp,
   });
 
-  useEffect(() => {
-    Preferences.get({ key: 'token' })
-      .then((res) => {
-        if (res.value) {
-          getNewAdvice()
-            .then((newAdvice) => setAdvice(newAdvice.data))
-            .catch((error) => {
-              console.error(error);
-              presentToast({
-                color: 'danger',
-                message: 'Whoops! Something went wrong.',
-                duration: 5000,
-                position: 'bottom',
-              });
-            })
-        } else {
-          router.push('/login', 'root');
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-        presentToast({
-          color: 'danger',
-          message: 'Whoops! Something went wrong.',
-          duration: 5000,
-          position: 'bottom',
-        });
-      })
-  }, [presentToast, router]);
-
-  const addAdvice = async () => {
+  const addAdvice = useCallback(async () => {
     try {
       const { data } = await getNewAdvice();
       setAdvice(data);
     } catch (error: any) {
       console.error(error);
+      presentToast({
+        color: 'danger',
+        message: 'Whoops! Something went wrong.',
+        duration: 5000,
+        position: 'bottom',
+      });
     }
-  };
+  }, [presentToast]);
+
+  useEffect(() => {
+    onAuthStateChanged(getFirebaseAuth(), (user) => {
+      if (user && router.routeInfo.pathname === '/home') {
+        addAdvice();
+      } else {
+        router.push('/login', 'root');
+      }
+    });
+  }, [addAdvice, router]);
 
   const [presentAdviceCollection, dismissAdviceCollection] = useIonModal(AdviceCollection, {
     onDismiss: () => dismissAdviceCollection(),

@@ -1,5 +1,5 @@
 import type { OverlayEventDetail } from '@ionic/core/components';
-import { IonFab, IonFabButton, IonIcon, useIonModal } from '@ionic/react';
+import { IonFab, IonFabButton, IonIcon, useIonModal, useIonToast } from '@ionic/react';
 import { thumbsDown, addCircle, thumbsUp } from 'ionicons/icons';
 import { createAdvice } from '../services/AdviceService';
 import AdvisorCreator from './AdviceCreator';
@@ -9,11 +9,28 @@ const ManualActions = ({ likeStatus }: { likeStatus: (status: string) => void })
     onDismiss: (data: string, role: string) => dismissAdvisorCreator(data, role),
   });
 
+  const [presentToast] = useIonToast();
+
   function openAdvisorCreatorModal() {
     presentAdvisorCreator({
       onWillDismiss: async (ev: CustomEvent<OverlayEventDetail>) => {
         if (ev.detail.role !== 'confirm') return;
-        await createAdvice(ev.detail.data);
+        try {
+          await createAdvice(ev.detail.data);
+          presentToast({
+            message: 'Advice created successfully!',
+            duration: 2000,
+            position: 'bottom',
+          });
+        } catch (error: any) {
+          console.error(error);
+          presentToast({
+            color: 'danger',
+            message: 'Whoops! Something went wrong.',
+            duration: 2000,
+            position: 'bottom',
+          });
+        }
       },
     });
   }

@@ -29,7 +29,7 @@ const AdviceList = (props: any) => {
       console.error(e);
       presentToast('Something went wrong', 2000);
     }
-  }
+  };
 
   useEffect(() => {
     presentLoading();

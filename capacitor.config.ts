@@ -15,14 +15,13 @@ const config: CapacitorConfig = {
     //   launchAutoHide: false,
     //   backgroundColor: '#ca601d'
     // }
+  },
+  android: {
+      buildOptions: {
+        keystorePath: 'undefined',
+        keystoreAlias: 'undefined',
+      }
   }
-,
-    android: {
-       buildOptions: {
-          keystorePath: 'undefined',
-          keystoreAlias: 'undefined',
-       }
-    }
-  };
+};
 
 export default config;
