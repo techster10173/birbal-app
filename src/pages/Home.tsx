@@ -63,7 +63,7 @@ const Home: React.FC = () => {
         router.push('/login', 'root');
       }
     });
-  }, [addAdvice, router]);
+  }, []);
 
   const [presentAdviceCollection, dismissAdviceCollection] = useIonModal(AdviceCollection, {
     onDismiss: () => dismissAdviceCollection(),
