@@ -25,6 +25,7 @@ import LoadingCard from '../components/LoadingCard';
 import SideMenu from '../components/SideMenu';
 import { onAuthStateChanged } from 'firebase/auth';
 import getFirebaseAuth from '../services/firebase';
+import { LocalNotifications } from '@capacitor/local-notifications';
 
 const Home: React.FC = () => {
   const router = useIonRouter();
@@ -59,6 +60,17 @@ const Home: React.FC = () => {
     onAuthStateChanged(getFirebaseAuth(), (user) => {
       if (user && router.routeInfo.pathname === '/home') {
         addAdvice();
+        LocalNotifications.requestPermissions().then(() => {
+          LocalNotifications.schedule({
+            notifications: [
+              {
+                title: 'Birbal',
+                body: 'Birbal has a new advice for you!',
+                id: 1,
+              },
+            ],
+          });
+        });
       } else {
         router.push('/login', 'root');
       }

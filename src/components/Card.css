@@ -21,7 +21,8 @@
 
 .card-header {
   padding-top: 2%;
-  padding-right: 0%;
+  width: fit-content;
+  left: 75%;
 }
 
 .report-button {

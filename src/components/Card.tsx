@@ -110,8 +110,8 @@ const CardInner = (props: any, ref: any) => {
     <IonCard id={props.adviceId} className="swipe-card" ref={ref}>
       <IonCardHeader className="card-header">
         <IonButton
-          mode="ios"
           className="select-button"
+          mode="ios"
           onClick={(e: any) => {
             if (props.adviceId) {
               presentPopover({

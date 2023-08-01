@@ -11,6 +11,11 @@ import {
   useIonToast,
   useIonRouter,
   useIonAlert,
+  IonToggle,
+  IonCard,
+  IonCardHeader,
+  IonCardContent,
+  IonCardSubtitle,
 } from '@ionic/react';
 import { logOut, trash } from 'ionicons/icons';
 import { deleteAccount, signOut } from '../services/UserService';
@@ -75,14 +80,31 @@ const SideMenu = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent className="ion-padding" scrollY={false}>
-        <IonButton expand="full" onClick={signOutWrapper}>
-          <IonIcon slot="start" icon={logOut} />
-          Logout
-        </IonButton>
-        <IonButton expand="full" color="danger" onClick={deleteWrapper}>
-          <IonIcon slot="start" icon={trash} />
-          Delete Account
-        </IonButton>
+        <IonCard>
+          <IonCardHeader>
+            <IonCardSubtitle>Notifications</IonCardSubtitle>
+          </IonCardHeader>
+          <IonCardContent>
+            <IonToggle checked={true} labelPlacement="end">
+              Scheduled
+            </IonToggle>
+          </IonCardContent>
+        </IonCard>
+        <IonCard>
+          <IonCardHeader>
+            <IonCardSubtitle>Account</IonCardSubtitle>
+          </IonCardHeader>
+          <IonCardContent>
+            <IonButton expand="full" onClick={signOutWrapper}>
+              <IonIcon slot="start" icon={logOut} />
+              Logout
+            </IonButton>
+            <IonButton expand="full" color="danger" onClick={deleteWrapper}>
+              <IonIcon slot="start" icon={trash} />
+              Delete Account
+            </IonButton>
+          </IonCardContent>
+        </IonCard>
       </IonContent>
       <IonFooter>
         <IonToolbar>
